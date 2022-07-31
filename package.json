@@ -1,0 +1,19 @@
+{
+  "name": "trabalho2",
+  "version": "1.0.0",
+  "description": "Trabalho para a disciplina de Inteligência Computacional 2022.1",
+  "main": "index.js",
+  "scripts": {
+    "trabalho": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabiiwa/Batch-Scheduling.git"
+  },
+  "author": "Gabriele Cesar Iwashima, Thiago de Almeida Lopes",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gabiiwa/Batch-Scheduling/issues"
+  },
+  "homepage": "https://github.com/gabiiwa/Batch-Scheduling#readme"
+}
