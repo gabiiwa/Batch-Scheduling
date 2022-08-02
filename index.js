@@ -1,5 +1,6 @@
 
-const Instancias = require('./Instancias');
+const CarregaInstancias = require('./CarregaInstancias');
 
+const inst = new CarregaInstancias();
 
-const inst = new Instancias();
+console.log(inst.instancias)
