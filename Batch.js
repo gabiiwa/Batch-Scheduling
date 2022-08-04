@@ -30,6 +30,7 @@ class Batch {
     tamanhoBatch(){
 
     }
+
 }
 
 // Exporta o módulo pra ficar disponível pro resto do projeto

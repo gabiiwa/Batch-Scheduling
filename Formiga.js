@@ -6,6 +6,11 @@ class Formiga {
     constructor() {
 
     }
+
+    getFuncaoObjetivo(){
+        // Calcula e retorna o valor da função objetivo
+        return 0
+    }
     
 }
 
