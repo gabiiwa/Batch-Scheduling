@@ -6,17 +6,16 @@ class Batch {
     constructor() {
 
     }
-    
-    addJob(){
-
-    }
-
-    removeJob(){
-
+    /**
+     * Insere um job dentro do batch
+     * @param {Job} job
+     */
+    addJob(job){
+        jobs = jobs.push(job)
     }
 
     timeInicio(){
-
+        
     }
 
     timeFim(){
