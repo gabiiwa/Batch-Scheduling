@@ -1,4 +1,4 @@
-export const Parametros = {
+const Parametros = {
     // Feromonio
     feromonioInicial: 0.1,
     // Função de probabilidade
@@ -10,3 +10,6 @@ export const Parametros = {
     rho: 0.05,
     // Reforço
 }
+
+// Exporta o módulo pra ficar disponível pro resto do projeto
+module.exports = {Parametros};

@@ -56,11 +56,12 @@ class CarregaInstancias {
                 instancia.setNumQ(lsArr[0])
             } else if (lsArr.length === 5) {
                 instancia.addJob(new Job(
-                    lsArr[0],
-                    lsArr[1],
-                    lsArr[2],
-                    lsArr[3],
-                    lsArr[4],
+                    i-2,      // id
+                    lsArr[0], // p
+                    lsArr[1], // d
+                    lsArr[2], // s
+                    lsArr[3], // w
+                    lsArr[4], // r
                 ))
             }
             i++;
