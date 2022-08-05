@@ -1,13 +1,15 @@
 
 class Job {
 
+    id=0
     tempoProcessamento = 0
     tamanho = 0
     dataLancamento = 0
     prazo = 0
     peso = 0
 
-    constructor(p, d, s, w, r) {
+    constructor(id, p, d, s, w, r) {
+        this.id=id
         this.tempoProcessamento = p
         this.prazo = d
         this.tamanho = s
