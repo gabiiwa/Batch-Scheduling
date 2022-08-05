@@ -1,5 +1,7 @@
 
 class ACO {
+    
+    melhorSolucao = []
 
     constructor() {
 

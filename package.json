@@ -4,7 +4,8 @@
   "description": "Trabalho para a disciplina de Inteligência Computacional 2022.1",
   "main": "index.js",
   "scripts": {
-    "trabalho": "node index.js"
+    "trabalho": "node index.js",
+    "teste": "node Testes.js"
   },
   "repository": {
     "type": "git",
