@@ -23,6 +23,27 @@ class MatrizFeromonio {
     }
 
     /**
+     * Obtem o valor do feromônio para o caminho representado por um
+     * job e um batch
+     * @param {number} jobId Id do job
+     * @param {number} batch Indice do batch dentro do array da solução
+     * @returns {number} Valor do feromônio
+     */
+    getFeromonio(jobId, batch){
+
+        if(this.numBatches < (batch+1)){
+            // insere uma coluna na matriz se o batch solicitado
+            // não estiver na matriz
+            for (let i=0; i<numJobs; i++){
+                this.T[i].push(Parametros.feromonioInicial)
+            }
+            this.numBatches++
+        }
+
+        return this.T[jobId][batch]
+    }
+
+    /**
      * Calcula a frequencia em que um job é inserido em um batch
      * na iteração atual
      * @param {Array<Formiga>} kMelhoresSolucoes 
@@ -55,14 +76,21 @@ class MatrizFeromonio {
      */
     atualizaFeromonio(kMelhoresSolucoes, instancia){
         // φij(t + 1) = (1 − ρ) ∗ φxj(t) + Q/TWT(s) ∗ mxj(t)
-        freq = frequencia(kMelhoresSolucoes)
-        for (let i=0; i<numJobs; i++){
-            for (let j=0; j<numBatches; j++){
+        let map = this.frequencia(kMelhoresSolucoes)
+        for (let i=0; i<this.numJobs; i++){
+            for (let j=0; j<this.numBatches; j++){
+                const chave = `${i}-${j}`
+                let freq = 0
+                if(map.has(chave)){
+                    freq = map.get(chave)
+                }
+                let evaporacao = (1-Parametros.rho) * this.T[i][j]
+                let reforco = 0
+                if(freq !== 0){
+                    reforco = instancia.numQ / (kMelhoresSolucoes[0].getFuncaoObjetivo() * freq)
+                }
 
-                evaporacao = (1-Parametros.rho) * T[i][j]
-                reforco = instancia.numQ / (kMelhoresSolucoes[0].getFuncaoObjetivo() * 1)
-
-                T[i][j] += reforco + evaporacao
+                this.T[i][j] = reforco + evaporacao
             }
         }
     }
