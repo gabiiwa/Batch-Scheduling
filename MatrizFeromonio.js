@@ -26,12 +26,12 @@ class MatrizFeromonio {
      * Obtem o valor do feromônio para o caminho representado por um
      * job e um batch
      * @param {number} jobId Id do job
-     * @param {number} batch Indice do batch dentro do array da solução
+     * @param {number} batchId Indice do batch dentro do array da solução
      * @returns {number} Valor do feromônio
      */
-    getFeromonio(jobId, batch){
+    getFeromonio(jobId, batchId){
 
-        if(this.numBatches < (batch+1)){
+        if(this.numBatches < (batchId+1)){
             // insere uma coluna na matriz se o batch solicitado
             // não estiver na matriz
             for (let i=0; i<numJobs; i++){
@@ -40,7 +40,7 @@ class MatrizFeromonio {
             this.numBatches++
         }
 
-        return this.T[jobId][batch]
+        return this.T[jobId][batchId]
     }
 
     /**
@@ -53,7 +53,7 @@ class MatrizFeromonio {
         const map = new Map();
         for (const formiga of kMelhoresSolucoes){
             for (let batch=0; batch < formiga.solucao.length; batch++){
-                for (const job of formiga.solucao[batch]){
+                for (const job of formiga.solucao[batch].jobs){
                     // Define o formato da chave do hashmap
                     const chave = `${job.id}-${batch}`
                     if(map.has(chave)){
