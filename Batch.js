@@ -4,7 +4,7 @@ class Batch {
     
     jobs = []
 
-    constructor(listaDeJobs) {
+    constructor(listaDeJobs = []) {
         this.jobs = listaDeJobs
     }
     /**
@@ -50,7 +50,11 @@ class Batch {
      * Retornar o tamanho do batch
      */
     tamanhoBatch(){
-        return this.jobs.length
+        let s=0
+        for(let j=0; j<this.jobs.length; j++){
+            s += this.jobs[j].tamanho
+        }
+        return s
     }
 
 }

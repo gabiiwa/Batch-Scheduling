@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "trabalho": "node index.js",
-    "teste": "node Testes.js"
+    "coverage": "jest --runInBand --detectOpenHandles --colors --verbose --coverage --reporters=default",
+    "testfail": "jest --onlyFailures",
+    "test": "jest --watch --verbose"
   },
   "repository": {
     "type": "git",
@@ -16,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/gabiiwa/Batch-Scheduling/issues"
   },
-  "homepage": "https://github.com/gabiiwa/Batch-Scheduling#readme"
+  "homepage": "https://github.com/gabiiwa/Batch-Scheduling#readme",
+  "devDependencies": {
+    "jest": "^28.1.3"
+  }
 }

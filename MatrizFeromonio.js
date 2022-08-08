@@ -34,7 +34,7 @@ class MatrizFeromonio {
         if(this.numBatches < (batchId+1)){
             // insere uma coluna na matriz se o batch solicitado
             // não estiver na matriz
-            for (let i=0; i<numJobs; i++){
+            for (let i=0; i<this.numJobs; i++){
                 this.T[i].push(Parametros.feromonioInicial)
             }
             this.numBatches++
