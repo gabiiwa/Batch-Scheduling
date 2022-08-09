@@ -1,4 +1,5 @@
 const Parametros = {
+    numeroDeFormigas: 50,
     // Feromonio
     feromonioInicial: 0.1,
     // Função de probabilidade

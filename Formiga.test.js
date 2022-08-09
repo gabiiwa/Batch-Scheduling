@@ -22,7 +22,7 @@ describe('Teste da formiga', function () {
         const matrizFeromonio = new MatrizFeromonio(6,3)
         const formiga = new Formiga(matrizFeromonio, instanciaTeste);
 
-        expect(formiga).not.toBeNull()
+        expect(formiga).not.toBeFalsy()
         expect(Array.isArray(formiga.solucao)).toBe(true)
         expect(Array.isArray(formiga.listaDeCandidatos)).toBe(true)
 
@@ -38,7 +38,7 @@ describe('Teste da formiga', function () {
         const matrizFeromonio = new MatrizFeromonio(6,3)
         const formiga = new Formiga(matrizFeromonio, instanciaTeste);
         const {valores, soma} = formiga.getHeuristica()
-        expect(formiga).not.toBeNull()
+        expect(formiga).not.toBeFalsy()
         expect(valores).toStrictEqual([
             1/3,
             1/2,
@@ -68,7 +68,7 @@ describe('Teste da formiga', function () {
             ])
         ]
         const objetivo = formiga.getFuncaoObjetivo()
-        expect(objetivo).not.toBeNull()
+        expect(objetivo).not.toBeFalsy()
         expect(objetivo).toBeCloseTo(18, 2)
     })
 
@@ -90,7 +90,7 @@ describe('Teste da formiga', function () {
             ])
         ]
         const valores = formiga.tempoConclusao()
-        expect(formiga).not.toBeNull()
+        expect(formiga).not.toBeFalsy()
         expect(valores).toStrictEqual([3, 4, 7])
     })
 
@@ -112,7 +112,7 @@ describe('Teste da formiga', function () {
             ])
         ]
         const valores = formiga.getProbabilidade()
-        expect(formiga).not.toBeNull()
+        expect(formiga).not.toBeFalsy()
         expect(valores['0']).toBeCloseTo(0.11, 2)
         expect(valores['1']).toBeCloseTo(0.17, 2)
         expect(valores['2']).toBeCloseTo(0.11, 2)
@@ -120,5 +120,32 @@ describe('Teste da formiga', function () {
         expect(valores['4']).toBeCloseTo(0.17, 2)
         expect(valores['5']).toBeCloseTo(0.34, 2)
 
+    })
+
+    it('Testa se a função de escolher um job aleatoriamente funciona corretamente', function () {
+        const matrizFeromonio = new MatrizFeromonio(6,3)
+        const formiga = new Formiga(matrizFeromonio, instanciaTeste);
+
+        const job = formiga.sorteiaUmJob()
+        expect(job).not.toBeFalsy()
+        expect(job instanceof Job).toBe(true)
+        expect(formiga.listaDeCandidatos.includes(job)).toBe(false)
+    })
+
+    it('Testa a montagem da solução dentro da formiga', function () {
+        const matrizFeromonio = new MatrizFeromonio(6,3)
+        const formiga = new Formiga(matrizFeromonio, instanciaTeste);
+
+        formiga.insereSolucao()
+        expect(formiga.solucao).not.toBeFalsy()
+        for(let batch of formiga.solucao){
+            expect(batch instanceof Batch).toBe(true)
+            expect(batch.tamanhoBatch()).toBeLessThanOrEqual(instanciaTeste.numQ)
+            for(let job of batch.jobs){
+                expect(job instanceof Job).toBe(true)
+            }
+        }
+
+        expect(formiga.listaDeCandidatos.length).toBe(0)
     })
 })

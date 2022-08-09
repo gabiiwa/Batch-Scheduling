@@ -8,12 +8,14 @@ class Formiga {
     
     solucao = []
     listaDeCandidatos = []
+    instancia = null
     
     /**
      * @param {MatrizFeromonio} matrizFeromonio Instância da matriz de feromônios 
      * @param {Instancia} instancia Instancia da classe que contem os dados do arquivo da instância do dataset
      */
     constructor(matrizFeromonio, instancia) {
+        this.instancia = instancia
         this.matrizFeromonio = matrizFeromonio
         // Faz uma copia da lista de jobs da instância
         this.listaDeCandidatos = [...instancia.jobs]
@@ -30,12 +32,40 @@ class Formiga {
      */
     sorteiaUmJob(){
         //https://pt.stackoverflow.com/questions/147884/sorteio-aleat%C3%B3rio-mas-com-diferentes-probabilidades
+        
+        let x = Math.random()
+        let prob = this.getProbabilidade()
+
+        for(let [key,value] of Object.entries(prob)){
+            x = x - value
+            if(x<=0){
+                let id_job_retirar = this.listaDeCandidatos.findIndex((job)=>{
+                    return job.id==key
+                })
+                let job_sol = this.listaDeCandidatos.splice(id_job_retirar,1)
+                return job_sol[0]
+            }
+        }
     }
 
     /**
+     * Insere um job de acordo com a capacidade da máquina
+     * @param
+     */
+    insereSolucao(){
+        while(this.listaDeCandidatos.length!=0){
+            let job_entra = this.sorteiaUmJob()
+            let tam_batch_novo = this.solucao[this.solucao.length-1].tamanhoBatch()+job_entra.tamanho
+            if(tam_batch_novo<=this.instancia.numQ){
+                this.solucao[this.solucao.length-1].addJob(job_entra)
+            }
+            else{
+                this.solucao.push(new Batch([job_entra]))
+            }
+        }
+    }
+    /**
      * Retorna o valor da probalidade 
-     * @param {number} jobId 
-     * @param {number} batchId 
      */
      getProbabilidade(){
         let heuristica = this.getHeuristica()
@@ -46,12 +76,12 @@ class Formiga {
         for(let i=0;i < this.listaDeCandidatos.length;i++){
             let batchId = this.solucao.length -1
             let jobId = this.listaDeCandidatos[i].id
-            p_down += (Math.pow(this.matrizFeromonio.getFeromonio(jobId,batchId),Parametros.alpha))*Math.pow(heuristica.valores[jobId],Parametros.beta)
+            p_down += (Math.pow(this.matrizFeromonio.getFeromonio(jobId,batchId),Parametros.alpha))*Math.pow(heuristica.valores[i],Parametros.beta)
         }
         for(let i=0;i < this.listaDeCandidatos.length;i++){
             let batchId = this.solucao.length -1
             let jobId = this.listaDeCandidatos[i].id
-            let p_up = (Math.pow(this.matrizFeromonio.getFeromonio(jobId,batchId),Parametros.alpha))*Math.pow(heuristica.valores[jobId],Parametros.beta)
+            let p_up = (Math.pow(this.matrizFeromonio.getFeromonio(jobId,batchId),Parametros.alpha))*Math.pow(heuristica.valores[i],Parametros.beta)
     
             p[jobId] = p_up/p_down
         }

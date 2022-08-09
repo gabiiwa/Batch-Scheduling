@@ -33,6 +33,25 @@ describe('Teste da matriz de feromônios', function () {
     it('Obtem o feromônio de um batch que já esteja na matriz', function () {
         const instMatriz = new MatrizFeromonio(6,3)
         const p = Parametros.feromonioInicial
+        const feromonio = instMatriz.getFeromonio(2,2)
+        expect(instMatriz).not.toBeNull();
+        expect(feromonio).not.toBeNull();
+        expect(feromonio).toBe(p)
+        expect(instMatriz.numJobs).toBe(6)
+        expect(instMatriz.numBatches).toBe(3)
+        expect(instMatriz.T).toStrictEqual([
+            new Array(3).fill(p),
+            new Array(3).fill(p),
+            new Array(3).fill(p),
+            new Array(3).fill(p),
+            new Array(3).fill(p),
+            new Array(3).fill(p)
+        ])
+    })
+
+    it('Obtem o feromônio de um batch que já esteja na matriz', function () {
+        const instMatriz = new MatrizFeromonio(6,3)
+        const p = Parametros.feromonioInicial
         const feromonio = instMatriz.getFeromonio(2,3)
         expect(instMatriz).not.toBeNull();
         expect(feromonio).not.toBeNull();
