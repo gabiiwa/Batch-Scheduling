@@ -159,6 +159,29 @@ class Formiga {
         return C
     }
 
+    /**
+     * Função estática que imprime a solução vinda diretamente ou obtida de uma formiga
+     * @param {Array<Batch>|Formiga} solucao solução ou formiga com a solução
+     */
+    static imprimeSolucao(solucao){
+        let sol = []
+        let sol_batches = []
+        if(solucao instanceof Formiga){
+            sol = solucao.solucao
+        } else {
+            sol = solucao
+        } 
+        for(let batch of sol){
+            let jobsIds = []
+            for(let job of batch.jobs){
+                jobsIds.push(job.id)
+            }
+            sol_batches.push(`{${jobsIds.join(',')}}`)
+        }
+
+        return `(${sol_batches.join(',')})`
+    }
+
     
     // B = ({2, 4, 6},{3},{1, 5})
 

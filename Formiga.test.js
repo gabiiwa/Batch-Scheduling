@@ -148,4 +148,44 @@ describe('Teste da formiga', function () {
 
         expect(formiga.listaDeCandidatos.length).toBe(0)
     })
+
+    it('Imprime uma solução no formato do artigo com solução vinda de um array', function () {
+        const solucao = [
+            new Batch([
+                instanciaTeste.jobs[1], // 2
+                instanciaTeste.jobs[3], // 4
+                instanciaTeste.jobs[5]  // 6
+            ]),
+            new Batch([
+                instanciaTeste.jobs[2], // 3
+            ]),
+            new Batch([
+                instanciaTeste.jobs[0], // 1
+                instanciaTeste.jobs[4], // 5
+            ])
+        ]
+
+        expect(Formiga.imprimeSolucao(solucao)).toBe('({1,3,5},{2},{0,4})')
+    })
+
+    it('Imprime uma solução no formato do artigo com solução vinda de uma formiga', function () {
+        const matrizFeromonio = new MatrizFeromonio(6,3)
+        const formiga = new Formiga(matrizFeromonio, instanciaTeste);
+        formiga.solucao = [
+            new Batch([
+                instanciaTeste.jobs[1], // 2
+                instanciaTeste.jobs[3], // 4
+                instanciaTeste.jobs[5]  // 6
+            ]),
+            new Batch([
+                instanciaTeste.jobs[2], // 3
+            ]),
+            new Batch([
+                instanciaTeste.jobs[0], // 1
+                instanciaTeste.jobs[4], // 5
+            ])
+        ]
+
+        expect(Formiga.imprimeSolucao(formiga)).toBe('({1,3,5},{2},{0,4})')
+    })
 })
