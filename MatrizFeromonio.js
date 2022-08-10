@@ -6,9 +6,9 @@ class MatrizFeromonio {
 
     T = [[]]
     numJobs=0
-    numBatches=0
+    numBatches=1
 
-    constructor(numJobs, numBatches) {
+    constructor(numJobs, numBatches=1) {
         this.numJobs = numJobs
         this.numBatches = numBatches
         
