@@ -19,11 +19,11 @@ describe('Teste ACO', function () {
         Parametros.rho = 0.05;
     })
 
-    it('Testa a montagem da solução dentro da formiga', function () {
+    it('Testa o ACO se ele consegue chegar na solução exata da instância de teste', function () {
 
         let aco = new ACO(instanciaTeste)
         let formiga = aco.getMelhorSolucaoInfo()
-        console.log(`Solução: ${Formiga.imprimeSolucao(formiga.solucao)} com objetivo: ${formiga.qualidade}`)
+        //console.log(`Solução: ${Formiga.imprimeSolucao(formiga.solucao)} com objetivo: ${formiga.qualidade}`)
         expect(formiga).not.toBeFalsy()
         expect(Array.isArray(formiga.solucao)).toBe(true)
         for(let batch of formiga.solucao){
@@ -34,7 +34,15 @@ describe('Teste ACO', function () {
             }
         }
 
+        expect(typeof formiga.solucao).toBe('object')
         expect(typeof formiga.qualidade).toBe('number')
+        expect(formiga.solucao[0].jobs.map(x=>x.id).includes(1)).toBe(true)
+        expect(formiga.solucao[0].jobs.map(x=>x.id).includes(5)).toBe(true)
+        expect(formiga.solucao[0].jobs.map(x=>x.id).includes(3)).toBe(true)
+        expect(formiga.solucao[1].jobs.map(x=>x.id).includes(2)).toBe(true)
+        expect(formiga.solucao[2].jobs.map(x=>x.id).includes(4)).toBe(true)
+        expect(formiga.solucao[2].jobs.map(x=>x.id).includes(0)).toBe(true)
+        expect(formiga.qualidade).toBe(18)
     })
 
 })

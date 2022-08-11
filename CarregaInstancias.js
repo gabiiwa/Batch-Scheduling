@@ -24,7 +24,7 @@ class CarregaInstancias {
                     // Lê as pastas relacionadas aos grupos de instâncias
                     const arquivo = fs.readdirSync(`./data/${capacidade[i]}/${jobs[j]}/${grupo[k]}`)
                     const caminho = `./data/${capacidade[i]}/${jobs[j]}/${grupo[k]}/${arquivo[0]}`
-                    const nome_artigo = `Q${capacidade[i]}_${jobs[j]}_G${k + 1}_${arquivo[0].split('.')[0]}`
+                    const nome_artigo = `Q${capacidade[i]}_${jobs[j]}J_G${k + 1}_${arquivo[0].split('.')[0]}`
                     this._carregaInstancia(nome_artigo, caminho);
                 }
             }

@@ -17,6 +17,7 @@ class ACO {
         let matrizFeromonio = new MatrizFeromonio(instancia.numJobs)
         let cont = 0
         while(cont < Parametros.num_semMelhora){
+            this.array_formigas = []
             for(let j=0; j<Parametros.numeroDeFormigas; j++){
                 let formiga = new Formiga(matrizFeromonio,instancia)
                 formiga.insereSolucao()
@@ -25,16 +26,18 @@ class ACO {
             let formigas_ordenadas = this.array_formigas.sort((a, b) => {
                 return a.getFuncaoObjetivo() - b.getFuncaoObjetivo()
             })
+
             let delete_count = Math.round(formigas_ordenadas.length*Parametros.gamma)
             let k = formigas_ordenadas.splice(0,delete_count)
             matrizFeromonio.atualizaFeromonio(k,instancia)
-            console.log(k[0].getFuncaoObjetivo())
-            if(this.funcaoObjetivo!=0){
-                if(this.funcaoObjetivo>k[0].getFuncaoObjetivo()){
-                    this.funcaoObjetivo=k[0].getFuncaoObjetivo()
-                    this.melhorSolucao=k[0].solucao
+
+            if(this.funcaoObjetivo != 0){
+                if(this.funcaoObjetivo > k[0].getFuncaoObjetivo()){
+                    this.funcaoObjetivo = k[0].getFuncaoObjetivo()
+                    this.melhorSolucao = k[0].solucao
+                    cont=0
                 }
-                else if(this.funcaoObjetivo-k[0].getFuncaoObjetivo()<0.1){
+                else {//if((k[0].getFuncaoObjetivo() - this.funcaoObjetivo) / this.funcaoObjetivo < 0.01){
                     cont+=1
                 }
             }
