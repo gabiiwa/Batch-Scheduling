@@ -4,7 +4,7 @@ const Instancia = require("./Instancia")
 const Job = require("./Job")
 const MatrizFeromonio = require("./MatrizFeromonio")
 const { Parametros } = require("./Parametros")
-const { instanciaTeste } = require("./Testes")
+const { instanciaTeste, imprimeSolucao } = require("./Testes")
 
 jest.mock('./Parametros')
 
@@ -186,6 +186,6 @@ describe('Teste da formiga', function () {
             ])
         ]
 
-        expect(Formiga.imprimeSolucao(formiga)).toBe('({1,3,5},{2},{0,4})')
+        expect(imprimeSolucao(formiga)).toBe('({1,3,5},{2},{0,4})')
     })
 })

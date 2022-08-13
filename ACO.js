@@ -1,3 +1,4 @@
+const fs = require('fs');
 const Batch = require("./Batch");
 const Formiga = require("./Formiga")
 const MatrizFeromonio = require("./MatrizFeromonio")
@@ -14,8 +15,10 @@ class ACO {
      * @param {Instancia} instancia 
      */
     constructor(instancia) {
+        //console.log('----------')
         let matrizFeromonio = new MatrizFeromonio(instancia.numJobs)
         let cont = 0
+        let jsonMatriz = [];
         while(cont < Parametros.num_semMelhora){
             this.array_formigas = []
             for(let j=0; j<Parametros.numeroDeFormigas; j++){
@@ -30,12 +33,13 @@ class ACO {
             let delete_count = Math.round(formigas_ordenadas.length*Parametros.gamma)
             let k = formigas_ordenadas.splice(0,delete_count)
             matrizFeromonio.atualizaFeromonio(k,instancia)
-
+            jsonMatriz.push(matrizFeromonio.T.flat())
             if(this.funcaoObjetivo != 0){
                 if(this.funcaoObjetivo > k[0].getFuncaoObjetivo()){
                     this.funcaoObjetivo = k[0].getFuncaoObjetivo()
                     this.melhorSolucao = k[0].solucao
                     cont=0
+                    //console.log('this.funcaoObjetivo',this.funcaoObjetivo)
                 }
                 else {//if((k[0].getFuncaoObjetivo() - this.funcaoObjetivo) / this.funcaoObjetivo < 0.01){
                     cont+=1
@@ -46,6 +50,7 @@ class ACO {
                 this.melhorSolucao=k[0].solucao
             }
         }
+        fs.writeFileSync(`matriz_feromonio.json`, JSON.stringify(jsonMatriz, null, 4));
     }
     
     /**

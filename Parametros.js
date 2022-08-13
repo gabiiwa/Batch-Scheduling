@@ -1,7 +1,7 @@
 const Parametros = {
     numeroDeFormigas: 50,
     // Feromonio
-    feromonioInicial: 0.1,
+    feromonioInicial: 1.1,
     // Função de probabilidade
     alpha: 0.1,
     beta: 0.5,
@@ -10,7 +10,7 @@ const Parametros = {
     // Evaporação
     rho: 0.05,
     // Número de vezes que se aceita iterar sem melhora 
-    num_semMelhora: 10,
+    num_semMelhora: 50,
 }
 
 // Exporta o módulo pra ficar disponível pro resto do projeto

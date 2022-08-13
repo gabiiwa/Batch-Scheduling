@@ -3,12 +3,21 @@ const fs = require('fs');
 const CarregaInstancias = require('./CarregaInstancias');
 const ACO = require('./ACO');
 const Formiga = require('./Formiga');
-const BKS = require('./BKS.json')
+const BKS = require('./BKS.json');
+const { carregaInstanciaTeste } = require('./Testes');
 
-const inst = new CarregaInstancias();
+//const inst = new CarregaInstancias();
+
+let inst = {
+    instancias: [
+        carregaInstanciaTeste('Q20_10J_G1_1', './teste/1.dat')
+    ]
+}
 
 console.log("--- Trabalho 2 Inteligencia Computacional ---")
 console.log("\nIniciando a execução das instâncias")
+
+const numExecucoes = 1;
 
 let logCsv = "nome_artigo,media,minima,bks,erro,tempo\n";
 for(let i=0; i<inst.instancias.length;i++){
@@ -21,7 +30,7 @@ for(let i=0; i<inst.instancias.length;i++){
     let mediaTempo = 0
 
     // Faz 10 execuções do ACO para cada instância e tira a média e mínimo das soluções
-    for (let j=0; j<10; j++){
+    for (let j=0; j<numExecucoes; j++){
         // Marca tempo de inicio do processamento
         const timestampInicio = new Date().getTime();
 
@@ -40,8 +49,8 @@ for(let i=0; i<inst.instancias.length;i++){
         }
     }
 
-    media /= 10
-    mediaTempo /= 10
+    media /= numExecucoes
+    mediaTempo /= numExecucoes
 
     const bks = BKS.find(x=>x.nomeArtigo === instancia.nomeArtigo).bks
     const erro = (minima - bks) / bks    
@@ -49,7 +58,7 @@ for(let i=0; i<inst.instancias.length;i++){
     console.log(`Instancia ${instancia.nomeArtigo}, media: ${media}, BKS: ${bks}, minima: ${minima}, erro: ${Math.round(erro*100)}%, tempo médio: ${Math.round(mediaTempo*100)/100}s \n`)
 
     // gera a linha no csv com os resultados
-    logCsv += `${instancia.nomeArtigo},${media},${minima},${bks},${erro},${Math.round(mediaTempo*100)/100}\n`
+    logCsv += `${instancia.nomeArtigo},${Math.round(media*100)/100},${minima},${bks},${erro},${Math.round(mediaTempo*100)/100}\n`
 
     if(i >= 1){ 
         break;

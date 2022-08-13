@@ -5,7 +5,7 @@ const Instancia = require("./Instancia")
 const Job = require("./Job")
 const MatrizFeromonio = require("./MatrizFeromonio")
 const { Parametros } = require("./Parametros")
-const { instanciaTeste } = require("./Testes")
+const { instanciaTeste, imprimeSolucao } = require("./Testes")
 
 jest.mock('./Parametros')
 
@@ -23,7 +23,7 @@ describe('Teste ACO', function () {
 
         let aco = new ACO(instanciaTeste)
         let formiga = aco.getMelhorSolucaoInfo()
-        //console.log(`Solução: ${Formiga.imprimeSolucao(formiga.solucao)} com objetivo: ${formiga.qualidade}`)
+        //console.log(`Solução: ${imprimeSolucao(formiga.solucao)} com objetivo: ${formiga.qualidade}`)
         expect(formiga).not.toBeFalsy()
         expect(Array.isArray(formiga.solucao)).toBe(true)
         for(let batch of formiga.solucao){
