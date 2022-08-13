@@ -5,23 +5,30 @@ const ACO = require('./ACO');
 const Formiga = require('./Formiga');
 const BKS = require('./BKS.json');
 const { carregaInstanciaTeste } = require('./Testes');
+const { Parametros } = require('./Parametros');
 
-//const inst = new CarregaInstancias();
+const inst = new CarregaInstancias(Parametros.diretorioInstancias);
 
-let inst = {
-    instancias: [
-        carregaInstanciaTeste('Q20_10J_G1_1', './teste/1.dat')
-    ]
-}
+// let inst = {
+//     instancias: [
+//         carregaInstanciaTeste('Q20_10J_G1_1', './teste/1.dat')
+//     ]
+// }
 
 console.log("--- Trabalho 2 Inteligencia Computacional ---")
 console.log("\nIniciando a execução das instâncias")
 
-const numExecucoes = 1;
 
-let logCsv = "nome_artigo,media,minima,bks,erro,tempo\n";
+let logCsv = "nome_artigo,media,minima,bks,erro,tempo\n"
+let nomeCsv = `trabalho2_solucao_${new Date().getTime()}`
+
 for(let i=0; i<inst.instancias.length;i++){
     const instancia = inst.instancias[i];
+
+    // Limita a quantidade de instâncias pra rodar
+    if(Parametros.limiteInstanciasRodar >= 0 && i >= Parametros.limiteInstanciasRodar){ 
+        break;
+    }
     
     console.log(`--- Inicia ACO para instância ${i+1} de ${inst.instancias.length} nomeada no artigo como ${instancia.nomeArtigo} ---`)
 
@@ -30,7 +37,7 @@ for(let i=0; i<inst.instancias.length;i++){
     let mediaTempo = 0
 
     // Faz 10 execuções do ACO para cada instância e tira a média e mínimo das soluções
-    for (let j=0; j<numExecucoes; j++){
+    for (let j=0; j<Parametros.numExecucoes; j++){
         // Marca tempo de inicio do processamento
         const timestampInicio = new Date().getTime();
 
@@ -49,21 +56,18 @@ for(let i=0; i<inst.instancias.length;i++){
         }
     }
 
-    media /= numExecucoes
-    mediaTempo /= numExecucoes
+    media /= Parametros.numExecucoes
+    mediaTempo /= Parametros.numExecucoes
 
     const bks = BKS.find(x=>x.nomeArtigo === instancia.nomeArtigo).bks
     const erro = (minima - bks) / bks    
     
-    console.log(`Instancia ${instancia.nomeArtigo}, media: ${media}, BKS: ${bks}, minima: ${minima}, erro: ${Math.round(erro*100)}%, tempo médio: ${Math.round(mediaTempo*100)/100}s \n`)
+    console.log(`Instancia ${instancia.nomeArtigo}, media: ${media.toFixed(2)}, BKS: ${bks}, minima: ${minima}, erro: ${erro.toFixed(2)*100}%, tempo médio: ${mediaTempo.toFixed(2)}s \n`)
 
     // gera a linha no csv com os resultados
-    logCsv += `${instancia.nomeArtigo},${Math.round(media*100)/100},${minima},${bks},${erro},${Math.round(mediaTempo*100)/100}\n`
+    logCsv += `${instancia.nomeArtigo},${media.toFixed(2)},${minima},${bks},${erro.toFixed(2)*100},${mediaTempo.toFixed(2)}\n`
 
-    if(i >= 1){ 
-        break;
-    }
+    // Salva arquivo csv
+    fs.writeFileSync(`${nomeCsv}.csv`, logCsv);
 }
 
-// Salva arquivo csv
-//fs.writeFileSync(`trabalho2_solucao_${new Date().getTime()}.csv`, logCsv);

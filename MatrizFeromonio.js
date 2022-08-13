@@ -77,7 +77,7 @@ class MatrizFeromonio {
      */
     atualizaFeromonio(kMelhoresSolucoes, instancia){
         // φij(t + 1) = (1 − ρ) ∗ φxj(t) + Q/TWT(s) ∗ mxj(t)
-        //let map = this.frequencia(kMelhoresSolucoes)
+        let map = this.frequencia(kMelhoresSolucoes)
         // console.log('---- Frequencia ----')
         // console.log(map)
         // console.log(map.size)
@@ -87,11 +87,7 @@ class MatrizFeromonio {
         // }
         for (let i=0; i<this.numJobs; i++){
             for (let j=0; j<this.numBatches; j++){
-                // const chave = `${i}-${j}`
-                // let freq = 0
-                // if(map.has(chave)){
-                //     freq = map.get(chave)
-                // }
+                
                 let evaporacao = (1-Parametros.rho) * this.T[i][j]
                 //let reforco = 0
                 // if(freq > 1){
@@ -107,8 +103,13 @@ class MatrizFeromonio {
         let melhorSolucao = kMelhoresSolucoes[0];
         for (let j=0; j<melhorSolucao.solucao.length; j++){
             for (let i=0; i<melhorSolucao.solucao[j].jobs.length; i++){
+                const chave = `${i}-${j}`
+                let freq = 0
+                if(map.has(chave)){
+                    freq = map.get(chave)
+                }
                 let jobId = melhorSolucao.solucao[j].jobs[i].id
-                this.T[jobId][j] += (instancia.numQ * 100) / (melhorSolucao.getFuncaoObjetivo())
+                this.T[jobId][j] += (instancia.numQ * freq) / (melhorSolucao.getFuncaoObjetivo())
             }
         }
         /*

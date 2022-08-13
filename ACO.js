@@ -19,10 +19,16 @@ class ACO {
         let matrizFeromonio = new MatrizFeromonio(instancia.numJobs)
         let cont = 0
         let jsonMatriz = [];
+        let beta_aco = Parametros.beta;
         while(cont < Parametros.num_semMelhora){
             this.array_formigas = []
+
+            // Atualiza o valor de beta que vai pras formigas
+            beta_aco = (1 - Parametros.taxa_decai_beta) * beta_aco
+
+            // Criação das formigas da iteração
             for(let j=0; j<Parametros.numeroDeFormigas; j++){
-                let formiga = new Formiga(matrizFeromonio,instancia)
+                let formiga = new Formiga(matrizFeromonio, beta_aco, instancia)
                 formiga.insereSolucao()
                 this.array_formigas.push(formiga)
             }

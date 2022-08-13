@@ -9,12 +9,14 @@ class Formiga {
     solucao = []
     listaDeCandidatos = []
     instancia = null
-    
+    beta_aco = 0
     /**
      * @param {MatrizFeromonio} matrizFeromonio Instância da matriz de feromônios 
+     * @param {number} beta_aco
      * @param {Instancia} instancia Instancia da classe que contem os dados do arquivo da instância do dataset
      */
-    constructor(matrizFeromonio, instancia) {
+    constructor(matrizFeromonio,beta_aco, instancia) {
+        this.beta_aco=beta_aco
         this.instancia = instancia
         this.matrizFeromonio = matrizFeromonio
         // Faz uma copia da lista de jobs da instância
@@ -66,6 +68,7 @@ class Formiga {
     }
     /**
      * Retorna o valor da probalidade 
+     * @param {number} iteracao
      */
      getProbabilidade(){
         let heuristica = this.getHeuristica()
@@ -76,18 +79,19 @@ class Formiga {
         for(let i=0;i < this.listaDeCandidatos.length;i++){
             let batchId = this.solucao.length -1
             let jobId = this.listaDeCandidatos[i].id
-            p_down += (Math.pow(this.matrizFeromonio.getFeromonio(jobId,batchId),Parametros.alpha))*Math.pow(heuristica.valores[i],Parametros.beta)
+            p_down += (Math.pow(this.matrizFeromonio.getFeromonio(jobId,batchId),Parametros.alpha))*Math.pow(heuristica.valores[i],this.beta_aco)
         }
         for(let i=0;i < this.listaDeCandidatos.length;i++){
             let batchId = this.solucao.length -1
             let jobId = this.listaDeCandidatos[i].id
-            let p_up = (Math.pow(this.matrizFeromonio.getFeromonio(jobId,batchId),Parametros.alpha))*Math.pow(heuristica.valores[i],Parametros.beta)
+            let p_up = (Math.pow(this.matrizFeromonio.getFeromonio(jobId,batchId),Parametros.alpha))*Math.pow(heuristica.valores[i],this.beta_aco)
     
             p[jobId] = p_up/p_down
         }
         return p
         
     }
+
 
     // {
     //     0: 0.11,
