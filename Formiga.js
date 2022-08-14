@@ -35,7 +35,7 @@ class Formiga {
     sorteiaUmJob(){
         //https://pt.stackoverflow.com/questions/147884/sorteio-aleat%C3%B3rio-mas-com-diferentes-probabilidades
         
-        let x = Math.random()
+        let x = Math.random() - 0.0001;
         let prob = this.getProbabilidade()
 
         for(let [key,value] of Object.entries(prob)){
