@@ -17,14 +17,14 @@ class CarregaInstancias {
         const capacidade = fs.readdirSync(diretorio_data)
         for (var i = 0; i < capacidade.length; i++) {
             // Lê as pastas relacionadas a capacidade da máquina
-            const jobs = fs.readdirSync(`./data/${capacidade[i]}`)
+            const jobs = fs.readdirSync(`${diretorio_data}/${capacidade[i]}`)
             for (var j = 0; j < jobs.length; j++) {
                 // Lê as pastas relacionadas a quantidade de jobs
-                const grupo = fs.readdirSync(`./data/${capacidade[i]}/${jobs[j]}`)
+                const grupo = fs.readdirSync(`${diretorio_data}/${capacidade[i]}/${jobs[j]}`)
                 for (var k = 0; k < grupo.length; k++) {
                     // Lê as pastas relacionadas aos grupos de instâncias
-                    const arquivo = fs.readdirSync(`./data/${capacidade[i]}/${jobs[j]}/${grupo[k]}`)
-                    const caminho = `./data/${capacidade[i]}/${jobs[j]}/${grupo[k]}/${arquivo[0]}`
+                    const arquivo = fs.readdirSync(`${diretorio_data}/${capacidade[i]}/${jobs[j]}/${grupo[k]}`)
+                    const caminho = `${diretorio_data}/${capacidade[i]}/${jobs[j]}/${grupo[k]}/${arquivo[0]}`
                     const nome_artigo = `Q${capacidade[i]}_${jobs[j]}J_${this._getGrupo(capacidade[i],grupo[k])}_${arquivo[0].split('.')[0]}`
                     //console.log(caminho, nome_artigo);
                     this._carregaInstancia(nome_artigo, caminho);
